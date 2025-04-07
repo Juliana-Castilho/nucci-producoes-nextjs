@@ -1,41 +1,47 @@
 .container {
   width: 100vw;
+  position: relative;
 }
 
 .container .carousel {
   display: flex;
-  overflow-x: auto;
+  overflow-x: auto; /* Permite rolagem horizontal */
   scroll-behavior: smooth;
 }
 
 .container .carousel::-webkit-scrollbar {
-  display: none;
+  display: none; /* Esconde a barra de rolagem */
 }
 
 .container .carousel .item {
+  position: relative; /* Permite posicionar elementos sobre a imagem */
   background-color: #333333;
-  width: 100%;
-  height: auto;
+  width: 100%; /* Largura total */
+  height: 500px; /* Altura fixa para garantir consistência */
   flex: none;
 }
 
 .container .carousel .item img {
-  width: 100%;
-  height: 500px;
-  object-fit: cover;
-  margin-top: -500px;
+  width: 100%; /* Largura total para preencher a div horizontalmente */
+  height: 100%; /* Altura total, para que a imagem acompanhe a div */
+  object-fit: cover; /* Garante que a imagem preencha a área e corte os lados quando necessário */
+  margin: 0; /* Remove deslocamentos */
 }
 
 .container .carousel .item .info {
-  height: 500px;
+  position: absolute; /* Posiciona os textos sobre a imagem */
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
   display: flex;
-  justify-content: center;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
-  position: relative;
-  margin: 0 auto;
+  text-align: center;
+  color: #fff;
   padding: 0 60px;
+  z-index: 2; /* Garante que o texto fique acima da imagem */
 }
 
 .container .carousel .item .info .title {
@@ -56,12 +62,13 @@
 }
 
 .container .buttons {
-  cursor: pointer;
+  position: absolute;
+  top: 50%;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  height: 500px;
-  position: absolute;
+  transform: translateY(-50%);
+  z-index: 3; /* Botões sobre o slider */
 }
 
 .container .buttons button {
@@ -76,4 +83,25 @@
   background-color: #00000052;
   box-shadow: 0 0 6px rgb(0, 0, 0);
   padding: 7px;
+}
+
+/* Responsividade para dispositivos menores */
+@media (max-width: 767px) {
+  .container .carousel .item {
+    height: 500px; /* Altura fixa para dispositivos menores */
+  }
+
+  .container .carousel .item img {
+    height: 100%; /* Imagem acompanha a altura fixa da div */
+    width: 100%; /* Preenche completamente a largura */
+    object-fit: cover; /* Garante o comportamento de cortar os lados da imagem */
+  }
+
+  .container .carousel .item .info .title {
+    font-size: 1.8rem; /* Ajusta tamanho do título */
+  }
+
+  .container .carousel .item .info .subtitle {
+    font-size: 1rem; /* Ajusta tamanho do subtítulo */
+  }
 }

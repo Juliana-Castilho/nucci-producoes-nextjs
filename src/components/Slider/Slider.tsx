@@ -40,12 +40,16 @@ export default function Slider() {
             <Image
               src="http://localhost:3000/carousel/images/prev-icon.svg"
               alt="Scroll left"
+              width={25}
+              height={25}
             />
           </button>
           <button onClick={handleRightClick}>
             <Image
               src="http://localhost:3000/carousel/images/next-icon.svg"
               alt="Scroll right"
+              width={25}
+              height={25}
             />
           </button>
         </div>

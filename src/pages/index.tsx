@@ -1,11 +1,36 @@
+import { useEffect, useState } from 'react';
 import CardList from '../../public/card/CardList';
 import { Button } from '../components/Button/Button';
 import Card from '../components/Card/Card';
 import styles from '../components/Card/Card.module.css';
 import CardImage from '../components/CardImage/CardImage';
 import Carousel from '../components/Carousel/Carousel';
+import { getGeolocation } from '../utils/getGeolocation';
 
 export default function Home() {
+  const [location, setLocation] = useState({ latitude: null, longitude: null });
+
+  const captureLocation = async () => {
+    try {
+      const location = await getGeolocation();
+      setLocation(location);
+      console.log(
+        `Latitude: ${location.latitude}, Longitude: ${location.longitude}`
+      );
+    } catch (error) {
+      console.error('Erro ao obter a localização:', error);
+    }
+  };
+
+  useEffect(() => {
+    captureLocation();
+  }, []);
+
+  // Função chamada ao clicar no botão
+  const handleClick = () => {
+    console.log(location);
+  };
+
   return (
     <>
       <div className="">
@@ -18,7 +43,10 @@ export default function Home() {
               <div className="grid lg:grid-cols-3">
                 {CardList.map((card) => {
                   return (
-                    <Card key={card.title} className={`${styles['card-scale-bg']}`}>
+                    <Card
+                      key={card.title}
+                      className={`${styles['card-scale-bg']}`}
+                    >
                       <CardImage
                         src={card.img}
                         alt="Portfólio"
@@ -32,7 +60,7 @@ export default function Home() {
                         {card.text}
                       </p>
                       <a className="inline-flex card-btn" href={'/portfolio'}>
-                        <Button>OUVIR</Button>
+                        <Button onClick={handleClick}>OUVIR</Button>
                       </a>
                     </Card>
                   );
